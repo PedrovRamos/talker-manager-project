@@ -15,10 +15,20 @@ async function readTalkerData() {
 
 async function writeNewTalkerData(newTalker) {
     try {
+        const { name, age, talk: { watchedAt, rate } } = newTalker;
         const oldTalker = await readTalkerData();
-        const allTalker = JSON.stringify([...oldTalker, newTalker]);
+        const newTalkerWithId = {
+            name,
+            age,
+            id: oldTalker.length += 1,
+            talk: {
+              watchedAt,
+              rate,
+            },
+          };
+        const allTalker = JSON.stringify([...oldTalker, newTalkerWithId]);
         await fs.writeFile(path.resolve(__dirname, MISSION_DATA_PATH), allTalker);
-        return newTalker;
+        return newTalkerWithId;
     } catch (err) {
         console.log(`erro na escrita do arquivo: ${err}`);
     }
