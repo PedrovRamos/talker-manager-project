@@ -18,7 +18,7 @@ function validateEmail(email) {
     } 
       return true;
   }
-  
+
   const validateLogin = (_request, response, next) => {
     const { email, password } = _request.body;
   

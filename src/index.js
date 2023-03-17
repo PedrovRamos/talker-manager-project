@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { readTalkerData, writeNewTalkerData } = require('./utils/fsUtils');
+const { readTalkerData, writeNewTalkerData, updateTalkerData } = require('./utils/fsUtils');
 const { validateLogin, validationToken,
   validationName,
   validationAge,
@@ -58,6 +58,28 @@ app.post('/login', validateLogin, async (_request, response) => {
   + Math.random().toString(16).substring(2)).substring(0, 16);
 
   response.status(HTTP_OK_STATUS).send({ token });
+});
+
+app.put('/talker/:id',
+validationToken, 
+validationName, 
+validationAge, 
+validationTalk, 
+validationWatched, 
+validationRate,
+ async (req, res) => {
+  try {
+     const data = await readTalkerData();
+    const id = +req.params.id;
+    if (Number(id) > data.length + 1) throw new Error('Pessoa palestrante não encontrada');
+    const { body } = req;
+    const { name, age, talk } = body;
+    const retorno = { id, name, age, talk };
+    updateTalkerData(id, body);
+    return res.status(200).json(retorno);
+  } catch ({ message }) {
+    return res.status(404).json({ message });
+  }
 });
 
 app.listen(PORT, () => {
