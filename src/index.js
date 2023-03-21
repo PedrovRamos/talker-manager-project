@@ -1,7 +1,12 @@
 const express = require('express');
 
-const { readTalkerData, writeNewTalkerData, updateTalkerData } = require('./utils/fsUtils');
-const { validateLogin, validationToken,
+const { readTalkerData, 
+  writeNewTalkerData, 
+  updateTalkerData,
+  deleteTalkerData } = require('./utils/fsUtils');
+
+  const { validateLogin, 
+  validationToken,
   validationName,
   validationAge,
   validationTalk,
@@ -24,7 +29,7 @@ app.get('/', (_request, response) => {
 
 app.get('/talker', async (_request, response) => {
   const talker = await readTalkerData();
-  response.status(HTTP_OK_STATUS).send(talker);
+  return response.status(HTTP_OK_STATUS).send(talker);
 });
 
 app.get('/talker/:id', async (_request, response) => {
@@ -33,9 +38,9 @@ app.get('/talker/:id', async (_request, response) => {
     const { id } = _request.params;
     const chosenTalker = talker.find((tal) => tal.id === Number(id));
     if (chosenTalker === undefined) throw new Error('Pessoa palestrante não encontrada');
-    response.status(HTTP_OK_STATUS).send(chosenTalker);
+    return response.status(HTTP_OK_STATUS).send(chosenTalker);
   } catch (err) {
-    response.status(HTTP_FAIL_STATUS).send({ message: err.message });
+    return response.status(HTTP_FAIL_STATUS).send({ message: err.message });
   }
 });
 
@@ -48,7 +53,7 @@ validationWatched,
 validationRate, async (_request, response) => {
   const newTalker = _request.body;
   const newTalkerWrite = await writeNewTalkerData(newTalker);
-  response.status(HTTP_CREATED_STATUS).send(newTalkerWrite);
+  return response.status(HTTP_CREATED_STATUS).send(newTalkerWrite);
 });
 
 app.post('/login', validateLogin, async (_request, response) => {
@@ -57,7 +62,7 @@ app.post('/login', validateLogin, async (_request, response) => {
   const token = (Math.random().toString(16).substring(2)
   + Math.random().toString(16).substring(2)).substring(0, 16);
 
-  response.status(HTTP_OK_STATUS).send({ token });
+  return response.status(HTTP_OK_STATUS).send({ token });
 });
 
 app.put('/talker/:id',
@@ -69,7 +74,7 @@ validationWatched,
 validationRate,
  async (req, res) => {
   try {
-     const data = await readTalkerData();
+    const data = await readTalkerData();
     const id = +req.params.id;
     if (Number(id) > data.length + 1) throw new Error('Pessoa palestrante não encontrada');
     const { body } = req;
@@ -81,7 +86,17 @@ validationRate,
     return res.status(404).json({ message });
   }
 });
+ 
+app.delete('/talker/:id', validationToken, async (_request, response) => {
+  try {
+    const { id } = _request.params;
+    await deleteTalkerData(Number(id));
+    return response.status(204).send();
+  } catch (err) {
+    console.log('não foi');
+  }
+});
 
-app.listen(PORT, () => {
+app.listen(PORT, validationToken, () => {
   console.log('Online');
 });
