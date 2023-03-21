@@ -1,5 +1,4 @@
 const fs = require('fs').promises;
-const { copyFileSync } = require('fs');
 const path = require('path');
 
 const TALKER_DATA_PATH = '../talker.json';
