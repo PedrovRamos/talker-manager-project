@@ -9,4 +9,5 @@ para realizar esse projeto utilizei as seguintes tecnologias:
 <ul>
   <li>Node.Js</li>
   <li>SQL</li>
+  <li>Express</li>
 </ul>
