@@ -1,10 +1,12 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+<h1>Talker Manager Project 🎤</h1>
+
+Nesse projeto, minha tarefa principal foi construir uma aplicação de cadastro de palestrantes, chamados de "talkers". A aplicação tinha como funcionalidades principais o cadastro, visualização, pesquisa, edição e exclusão de informações sobre os palestrantes.
+
+Para isso, desenvolvi uma API com as operações básicas de CRUD (Create, Read, Update e Delete) para lidar com os dados dos palestrantes. Implementei os endpoints necessários para criar, ler, atualizar e excluir informações no sistema.
+
+para realizar esse projeto utilizei as seguintes tecnologias:
+
+<ul>
+  <li>Node.Js</li>
+  <li>SQL</li>
+</ul>
